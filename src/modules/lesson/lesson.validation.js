@@ -6,7 +6,8 @@ export const addLessonVal = joi.object({
     description: generalFields.description.required(),
     video: generalFields.video.required(),
     classLevel: generalFields.classLevel.required(),
-    price: generalFields.price.optional()
+    price: generalFields.price.optional(),
+    scheduledDate: generalFields.scheduledDate.required()
 })
 
 export const updateLessonVal = joi.object({

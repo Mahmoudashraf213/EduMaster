@@ -30,6 +30,10 @@ const lessonSchema = new Schema({
         type: Boolean,
         default: false
     },
+    scheduledDate: {
+        type: Date,
+        required: true
+    },
     createdBy: {
         type: Types.ObjectId,
         ref: 'User',

@@ -27,6 +27,7 @@ export const messages = {
         failToUpdatePassword: "failed to update password",
         noAccountsFound: "no accounts found",
         otpSent: "OTP sent successfully",         // Kept from main
+        acountCreated: "Acount created successfully plese check your mail to verify"
     },
     lesson: generateMessage('lesson'),
     question: generateMessage('question'),

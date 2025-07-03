@@ -37,6 +37,15 @@ export const generalFields = {
         selectedAnswer: joi.string().required(),
     })).min(1).required(),
     price: joi.number().min(0),
+    scheduledDate: joi.date()
+        .iso() // صيغة ISO 8601 مثل: "2025-06-21T10:00:00Z"
+        .greater('now')
+        .required()
+        .messages({
+            'date.base': 'Scheduled date must be a valid date',
+            'date.greater': 'Scheduled date must be in the future',
+            'any.required': 'Scheduled date is required'
+        })
 }
 
 export const isValid = (schema) => {
