@@ -61,7 +61,7 @@ export const submitExam = async (req, res, next) => {
   }
 
   if (studentExam.isSubmitted) {
-    return next(new AppError(messages.exam.alreadyExist, 400));
+    return next(new AppError('Exam  already submitted', 400));
   }
 
   // Check if the current time exceeds the exam end time

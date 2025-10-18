@@ -17,13 +17,13 @@ export const addExam = async (req, res, next) => {
   const exam = new Exam({
     title,
     description,
-    duration, 
+    duration,
     questions,
     createdBy: req.authUser._id,
     classLevel,
     isPublished,
     startDate,
-    endDate, 
+    endDate,
   });
 
   // Save the exam to the database
@@ -45,8 +45,8 @@ export const addExam = async (req, res, next) => {
 
 // Logic for when a student starts the exam
 export const startExamForStudent = (exam, studentStartTime) => {
-// Calculate student's end time based on the start time and the exam duration
-  const studentEndTime = new Date(new Date(studentStartTime).getTime() + exam.duration * 60000);  
+  // Calculate student's end time based on the start time and the exam duration
+  const studentEndTime = new Date(new Date(studentStartTime).getTime() + exam.duration * 60000);
   return {
     studentStartTime,
     studentEndTime,
@@ -64,6 +64,7 @@ export const updateExam = async (req, res, next) => {
     classLevel,
     isPublished,
     endDate,
+    startDate
   } = req.body; // Get exam data from request body
 
   title = title ? title.toLowerCase() : null;
@@ -71,14 +72,14 @@ export const updateExam = async (req, res, next) => {
   // Check if the exam exists
   const examExist = await Exam.findById(examId);
   if (!examExist) {
-    return next(new AppError(messages.exam.notExist, 404)); 
+    return next(new AppError(messages.exam.notExist, 404));
   }
 
   // Check if the title is already in use by another exam
   if (title) {
     const titleExist = await Exam.findOne({ title, _id: { $ne: examId } });
     if (titleExist) {
-      return next(new AppError(messages.exam.alreadyExist, 400)); 
+      return next(new AppError(messages.exam.alreadyExist, 400));
     }
   }
 
@@ -90,11 +91,12 @@ export const updateExam = async (req, res, next) => {
   if (classLevel) examExist.classLevel = classLevel;
   if (typeof isPublished !== "undefined") examExist.isPublished = isPublished;
   if (endDate) examExist.endDate = endDate;
+  if (startDate) examExist.startDate = startDate;
 
   // Save the updated exam
   const examUpdated = await examExist.save();
   if (!examUpdated) {
-    return next(new AppError(messages.exam.failToUpdate, 500)); 
+    return next(new AppError(messages.exam.failToUpdate, 500));
   }
 
   // Send response with the updated exam
@@ -112,7 +114,7 @@ export const getAllExams = async (req, res, next) => {
   const exams = await Exam.find().populate("questions");
 
   if (!exams) {
-    return next(new AppError(messages.exam.failToFetch, 500)); 
+    return next(new AppError(messages.exam.failToFetch, 500));
   }
 
   // Send response
@@ -130,8 +132,8 @@ export const getExamById = async (req, res, next) => {
 
   // Find the exam by ID and populate it to questions 
   const examExist = await Exam.findById(examId)
-    .populate('questions') 
-    // .populate('createdBy'); 
+    .populate('questions')
+  // .populate('createdBy'); 
 
   // If exam does not exist
   if (!examExist) {

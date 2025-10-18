@@ -23,6 +23,7 @@ export const updateExamVal = joi.object({
   classLevel: generalFields.classLevel.optional(),
   isPublished: generalFields.isPublished.optional(),
   endDate: generalFields.endDate.optional(),
+  startDate: generalFields.startDate.optional(),
   examId: generalFields.objectId.required()
 });
 
