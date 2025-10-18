@@ -12,7 +12,7 @@ const examRouter = Router();
 // Add exam route
 examRouter.post("/",
   isAuthenticated(),
-  isAuthorized([roles.ADMIN]),
+  isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),
   isValid(addExamVal), 
   asyncHandler(addExam) 
 );
@@ -20,7 +20,7 @@ examRouter.post("/",
 // Update exam route
 examRouter.put("/:examId",
   isAuthenticated(),  
-  isAuthorized([roles.ADMIN]),  
+  isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),  
   isValid(updateExamVal),  
   asyncHandler(updateExam)  
 );
@@ -28,7 +28,7 @@ examRouter.put("/:examId",
 // Get all exams route
 examRouter.get("/",
   isAuthenticated(),
-  isAuthorized([roles.ADMIN]),
+  isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),
   asyncHandler(getAllExams)
 );
 
@@ -36,7 +36,7 @@ examRouter.get("/",
 // Get a specific exam by ID route
 examRouter.get('/get/:examId',
   isAuthenticated(), 
-  isAuthorized([roles.ADMIN, roles.USER]),
+  isAuthorized([roles.ADMIN, roles.USER , roles.SUPER_ADMIN]),
   isValid(getExamByIDVal),
   asyncHandler(getExamById)
 );
@@ -45,7 +45,7 @@ examRouter.get('/get/:examId',
 // Delete exam route
 examRouter.delete('/:examId',
   isAuthenticated(),
-  isAuthorized([roles.ADMIN]), 
+  isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]), 
   isValid(deleteExamVal),
   asyncHandler(deleteExam)
 );
