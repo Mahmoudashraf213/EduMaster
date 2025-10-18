@@ -12,7 +12,7 @@ const studentExamRouter = Router();
 // Route to start an exam
 studentExamRouter.post('/start/:examId',
   isAuthenticated(),
-  isAuthorized([roles.USER, roles.ADMIN]),
+  isAuthorized([roles.USER, roles.ADMIN , roles.SUPER_ADMIN]),
   isValid(startExamVal),
   asyncHandler(startExam)
 );
@@ -20,7 +20,7 @@ studentExamRouter.post('/start/:examId',
 // Route to submit answers for an exam
 studentExamRouter.post('/submit/:examId',
   isAuthenticated(),
-  isAuthorized([roles.USER, roles.ADMIN]),
+  isAuthorized([roles.USER, roles.ADMIN , roles.SUPER_ADMIN]),
   isValid(submitExamVal),
   asyncHandler(submitExam)
 );
@@ -28,7 +28,7 @@ studentExamRouter.post('/submit/:examId',
 // remaining time 
 studentExamRouter.get('/exams/remaining-time/:examId',
   isAuthenticated(),
-  isAuthorized([roles.USER, roles.ADMIN]),
+  isAuthorized([roles.USER, roles.ADMIN , roles.SUPER_ADMIN]),
   isValid(getRemainingTimeVal),
   asyncHandler(getRemainingTime)
 )
@@ -36,14 +36,14 @@ studentExamRouter.get('/exams/remaining-time/:examId',
 // get all student exam 
 studentExamRouter.get('/exams/:examId',
   isAuthenticated(),
-  isAuthorized([roles.ADMIN]),
+  isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),
   asyncHandler(getExamScore)
 )
 
 // get score to student 
 studentExamRouter.get('/exams/score/:examId',
   isAuthenticated(),
-  isAuthorized([roles.USER, roles.ADMIN]),
+  isAuthorized([roles.USER, roles.ADMIN , roles.SUPER_ADMIN]),
   isValid(getStudentScoreVal),
   asyncHandler(getStudentScore)
 )

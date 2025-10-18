@@ -13,7 +13,7 @@ const questionRouter = Router();
 // Add question
 questionRouter.post('/',
     isAuthenticated(),
-    isAuthorized([roles.ADMIN]),
+    isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),
     isValid(addQuestionVal),
     asyncHandler(addQuestion) 
 );
@@ -22,7 +22,7 @@ questionRouter.post('/',
 // Update question route
 questionRouter.put("/:questionId",
     isAuthenticated(), 
-    isAuthorized([roles.ADMIN]),  
+    isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),  
     isValid(updateQuestionVal), 
     asyncHandler(updateQuestion)  
 );
@@ -30,14 +30,14 @@ questionRouter.put("/:questionId",
 // Get all questions route
 questionRouter.get('/',
     isAuthenticated(), 
-    isAuthorized([roles.ADMIN]),  
+    isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),  
     asyncHandler(getAllQuestions)  
 );
 
 // Get a specific question by ID route
 questionRouter.get('/get/:questionId',
     isAuthenticated(), 
-    isAuthorized([roles.ADMIN , roles.USER ]),
+    isAuthorized([roles.ADMIN , roles.USER , roles.SUPER_ADMIN]),
     isValid(getQuestionByIdVal),  
     asyncHandler(getQuestionById)  
 );
@@ -45,7 +45,7 @@ questionRouter.get('/get/:questionId',
 // Delete question route
 questionRouter.delete('/:questionId',
     isAuthenticated(),  
-    isAuthorized([roles.ADMIN]), 
+    isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]), 
     isValid(deleteQuestionVal),
     asyncHandler(deleteQuestion) 
 );

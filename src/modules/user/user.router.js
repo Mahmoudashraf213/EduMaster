@@ -18,27 +18,27 @@ userRouter.post('/reset-password', isValid(resetPasswordVal), asyncHandler(reset
 // update user acount
 userRouter.put('/:userId',
     isAuthenticated(),
-    isAuthorized([roles.USER, roles.ADMIN]),
+    isAuthorized([roles.USER, roles.ADMIN , roles.SUPER_ADMIN]),
     isValid(updateUserVal),
     asyncHandler(updateUser)
 )
 // delete user 
 userRouter.delete('/',
     isAuthenticated(),
-    isAuthorized([roles.ADMIN, roles.USER]),
+    isAuthorized([roles.ADMIN, roles.USER , roles.SUPER_ADMIN]),
     asyncHandler(deleteUser)
 )
 // get profile
 userRouter.get('/',
     isAuthenticated(),
-    isAuthorized([roles.USER, roles.ADMIN]),
+    isAuthorized([roles.USER, roles.ADMIN , roles.SUPER_ADMIN]),
     asyncHandler(getProfile)
 )
 
 // update password
 userRouter.patch('/update-password',
     isAuthenticated(),
-    isAuthorized([roles.USER, roles.ADMIN]),
+    isAuthorized([roles.USER, roles.ADMIN , roles.SUPER_ADMIN]),
     isValid(updatePasswordVal),
     asyncHandler(updatePassword)
 )

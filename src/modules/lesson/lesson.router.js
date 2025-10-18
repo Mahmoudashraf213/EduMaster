@@ -13,7 +13,7 @@ const lessonRouter = Router();
 // add lesson   
 lessonRouter.post('/',
     isAuthenticated(),
-    isAuthorized([roles.ADMIN]),
+    isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),
     isValid(addLessonVal),
     asyncHandler(addLesson)
 )
@@ -21,7 +21,7 @@ lessonRouter.post('/',
 // update lesson 
 lessonRouter.put('/:lessonId',
     isAuthenticated(),
-    isAuthorized([roles.ADMIN]),
+    isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),
     isValid(updateLessonVal),
     asyncHandler(updateLesson)
 )
@@ -29,14 +29,14 @@ lessonRouter.put('/:lessonId',
 // get lessons to spesefic classLevel
 lessonRouter.get('/',
     isAuthenticated(),
-    isAuthorized([roles.ADMIN, roles.USER]),
+    isAuthorized([roles.ADMIN, roles.USER , roles.SUPER_ADMIN]),
     asyncHandler(getLessons)
 )
 
 // get lesson by id  
 lessonRouter.get('/:lessonId',
     isAuthenticated(),
-    isAuthorized([roles.ADMIN, roles.USER]),
+    isAuthorized([roles.ADMIN, roles.USER , roles.SUPER_ADMIN]),
     isValid(getLessonByIdVal),
     asyncHandler(getLessonById)
 )
@@ -44,7 +44,7 @@ lessonRouter.get('/:lessonId',
 // delete lesson  
 lessonRouter.delete('/:lessonId',
     isAuthenticated(),
-    isAuthorized([roles.ADMIN]),
+    isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),
     isValid(deleteLessonVal),
     asyncHandler(deleteLesson)
 )
@@ -52,7 +52,7 @@ lessonRouter.delete('/:lessonId',
 // pay lesson
 lessonRouter.post('/pay/:lessonId',
     isAuthenticated(),
-    isAuthorized([roles.ADMIN, roles.USER]),
+    isAuthorized([roles.ADMIN, roles.USER , roles.SUPER_ADMIN]),
     isValid(payLessonVal),
     asyncHandler(payLesson)
 )
@@ -66,7 +66,7 @@ lessonRouter.post('/pay/:lessonId',
 
 lessonRouter.get('/my/purchased',
     isAuthenticated(),
-    isAuthorized([roles.USER, roles.ADMIN]),
+    isAuthorized([roles.USER, roles.ADMIN , roles.SUPER_ADMIN]),
     asyncHandler(getPurchasedLessons)
 );
 
