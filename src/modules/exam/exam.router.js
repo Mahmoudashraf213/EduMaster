@@ -28,7 +28,7 @@ examRouter.put("/:examId",
 // Get all exams route
 examRouter.get("/",
   isAuthenticated(),
-  isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),
+  isAuthorized([roles.ADMIN , roles.SUPER_ADMIN , roles.USER]),
   asyncHandler(getAllExams)
 );
 
