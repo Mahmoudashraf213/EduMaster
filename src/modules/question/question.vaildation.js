@@ -19,7 +19,7 @@ export const updateQuestionVal = joi.object({
     options: generalFields.options.optional(),
     correctAnswer: generalFields.correctAnswer.optional().required(),
     points: generalFields.points.optional().min(1),
-    exam: generalFields.objectId.optional(),
+    exam: joi.array().items(generalFields.objectId).min(1),
     questionId: generalFields.objectId.required()
 });
 
