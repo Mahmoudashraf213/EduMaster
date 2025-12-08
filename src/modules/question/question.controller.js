@@ -70,7 +70,7 @@ export const addQuestion = async (req, res, next) => {
 // update question
 export const updateQuestion = async (req, res, next) => {
   const { questionId } = req.params; // Get question ID from params
-  let { text, type, options, correctAnswer, points } = req.body; // Get question data from request body
+  let { text, type, options, correctAnswer, points , exam } = req.body; // Get question data from request body
 
   text = text ? text.trim() : null; // Ensure text is trimmed
 
@@ -78,6 +78,41 @@ export const updateQuestion = async (req, res, next) => {
   const questionExist = await Question.findById(questionId);
   if (!questionExist) {
     return next(new AppError(messages.question.notExist, 404)); // Return 404 if question does not exist
+  }
+  
+    if (exam) {
+    if (!Array.isArray(exam) || exam.length === 0) {
+      return next(new AppError("exam must be a non-empty array", 400));
+    }
+
+    // Validate that all exam IDs exist
+    const examsFound = await Exam.find({ _id: { $in: exam } });
+    if (examsFound.length !== exam.length) {
+      return next(new AppError("One or more exam are invalid", 400));
+    }
+
+    // Prevent duplicate question text inside each exam
+    if (text) {
+      for (const exam of exam) {
+        const duplicate = await Question.findOne({
+          text,
+          exam: exam,
+          _id: { $ne: questionId },
+        });
+
+        if (duplicate) {
+          return next(
+            new AppError(
+              `This question text already exists inside exam ${exam}`,
+              400
+            )
+          );
+        }
+      }
+    }
+
+    // Update the exams linked to the question
+    questionExist.exam = exam;
   }
 
   // Check if the text is already in use by another question in the same exam
