@@ -30,7 +30,7 @@ questionRouter.put("/:questionId",
 // Get all questions route
 questionRouter.get('/',
     isAuthenticated(), 
-    isAuthorized([roles.ADMIN , roles.SUPER_ADMIN]),  
+    isAuthorized([roles.ADMIN , roles.SUPER_ADMIN , roles.USER]),  
     asyncHandler(getAllQuestions)  
 );
 
